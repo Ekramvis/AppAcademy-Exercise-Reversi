@@ -44,6 +44,20 @@ class Board
       square[0].between?(0,7) && square[1].between?(0,7)
     end
   end
+
+  def get_piece(loc)
+    x,y = loc
+    @grid[y][x]
+  end
+
+  def detect_enemies(squares, color)
+    #takes array from detect neighbors
+    squares.select do |square|
+      next if get_piece(square).nil?
+      get_piece(square).color != color
+    end
+  end
+
 end
 
 

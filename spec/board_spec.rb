@@ -48,4 +48,21 @@ describe Board do
       end
     end
   end
+
+  describe "#get_piece(loc)" do
+    it "returns the grid value at a location" do
+      board.add_piece([0,0], :black)
+      board.get_piece([0,0]).should == board.grid[0][0]
+    end
+  end
+
+  describe "#detect_enemies(neighbors, color)" do
+    it "detects enemies on neighboring squares" do
+      board.add_piece([0,0], :black)
+      board.add_piece([0,1], :black)
+      board.add_piece([0,2], :white)
+      x = board.detect_neighbors([0,1])
+      board.detect_enemies(x, :black).should == [[0,2]]
+    end
+  end
 end
