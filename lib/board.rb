@@ -1,4 +1,4 @@
-require 'piece'
+require_relative 'piece'
 
 class Board
   attr_accessor :grid
@@ -33,7 +33,6 @@ class Board
     end
   end
 
-
   def get_piece(loc)
     x,y = loc
     @grid[y][x]
@@ -41,6 +40,7 @@ class Board
 
   def reversi(enemy_positions)
     enemy_positions.each do |enemy_pos|
+      next if nil
       flip_piece(enemy_pos)
     end
   end
@@ -75,6 +75,20 @@ class Board
     end
     res.sort!
   end
+
+  def display
+    @grid.each_with_index do |row, y|
+    # print "#{8-y} |"
+    print "#{y} |"
+    row.each_with_index do |square, x|
+    square.nil? ? (print '___|') : (print square.display)
+    end
+    puts
+    end
+    #puts "    A   B   C   D   E   F   G   H  "
+    puts "    0   1   2   3   4   5   6   7  "
+  end
+
 end
 
 

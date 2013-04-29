@@ -6,4 +6,8 @@ class Piece
     @color = color
   end
 
+  def display
+    @color == :white ? "_W_|" : "_B_|"
+  end
+
 end
