@@ -33,31 +33,53 @@ class Board
     end
   end
 
-  def detect_neighbors(loc)
-    x, y = loc
-
-    new_squares = DELTAS.map do |delta|
-      [delta[0] + x, delta[1] + y]
-    end
-
-    new_squares.select! do |square|
-      square[0].between?(0,7) && square[1].between?(0,7)
-    end
-  end
+  # def detect_neighbors(loc)
+  #   x, y = loc
+  #
+  #   new_squares = DELTAS.map do |delta|
+  #     [delta[0] + x, delta[1] + y]
+  #   end
+  #
+  #   new_squares.select! do |square|
+  #     square[0].between?(0,7) && square[1].between?(0,7)
+  #   end
+  # end
 
   def get_piece(loc)
     x,y = loc
     @grid[y][x]
   end
 
-  def detect_enemies(squares, color)
-    #takes array from detect neighbors
-    squares.select do |square|
-      next if get_piece(square).nil?
-      get_piece(square).color != color
-    end
+  # def detect_enemies(squares, color)
+  #   #takes array from detect neighbors
+  #   squares.select do |square|
+  #     next if get_piece(square).nil?
+  #     get_piece(square).color != color
+  #   end
+  # end
+  def color(loc)
+    get_piece(loc).color unless get_piece(loc).nil?
   end
 
+  def look_straight(start, delta)
+    x,y = start
+    dx,dy = delta
+    start_color = color(start)
+    res = []
+
+    return [] if get_piece([x+dx,y+dy]) && color([x+dx,y+dy]) == start_color
+
+
+    until get_piece([x + dx, y + dy]).nil?
+      return res if color([x+dx,y+dy]) == start_color
+      x += dx
+      y += dy
+
+      res << [x,y]
+    end
+
+    []
+  end
 end
 
 
